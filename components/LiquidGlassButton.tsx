@@ -372,7 +372,7 @@ export const MetalButton = React.forwardRef<
         <ShineEffect isPressed={isPressed} />
         {buttonText}
         {isHovered && !isPressed && !isTouchDevice && (
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t rounded-lg from-transparent to-white/5" />
+          <div className="pointer-events-none absolute inset-0 bg-linear-to-t rounded-lg from-transparent to-white/5" />
         )}
       </button>
     </div>
