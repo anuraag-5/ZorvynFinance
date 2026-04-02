@@ -7,6 +7,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import { useUserStore } from "@/lib/userStore";
+import { LiquidGlassSidebarItem } from "./LiquidSidebar";
+import { Folders, Settings } from "lucide-react"
 
 const Navbar = () => {
     const width = useWidth();
@@ -30,7 +32,7 @@ const Navbar = () => {
         <motion.div
             layout
             transition={{ duration: 0.4 }}
-            className={`hidden border-r border-[#767676] md:flex flex-col justify-between w-full 
+            className={`hidden border-r border-[#FFCC00] md:flex flex-col justify-between w-full 
         ${open ? "max-w-[300px] px-6 pt-6 pb-3" : "max-w-[80px] px-4 pt-6 pb-3"}
     `}
         >
@@ -42,54 +44,34 @@ const Navbar = () => {
                                 className="flex gap-3 cursor-pointer"
                                 onClick={() => router.push("/")}
                             >
-                                <div className="text-md lg:text-lg font-semibold px-3 py-0 rounded-full">
+                                <div className="text-lg lg:text-2xl py-0 rounded-full text-[#FFCC00]">
                                     Zorvyn
                                 </div>
                             </div>
                             <div className="cursor-pointer" onClick={handleMenuToggle}>
                                 <Image
-                                    src="/images/menu.png"
+                                    src="/menu.svg"
                                     alt=""
-                                    width={width > 1024 ? 25 : 20}
-                                    height={width > 1024 ? 25 : 20}
+                                    width={width > 1024 ? 35 : 25}
+                                    height={width > 1024 ? 35 : 25}
                                 />
                             </div>
                         </div>
                         <div className="flex flex-col gap-3">
-                            <div
-                                className={
-                                    (currentTab == "/dashboard"
-                                        ? "bg-[#333333] "
-                                        : "bg-transparent ") +
-                                    " rounded-lg flex items-center w-full flex-start gap-3 py-3 px-4 cursor-pointer"
-                                }
+                            <LiquidGlassSidebarItem
+                                icon="/dashboard.svg"
+                                isActive={currentTab === "/dashboard"}
                                 onClick={() => handleTabChange("/dashboard")}
-                            >
-                                <Image
-                                    src="/images/overview-icon-black.png"
-                                    alt=""
-                                    width={width > 1024 ? 25 : 20}
-                                    height={width > 1024 ? 25 : 20}
-                                />
-                                <div className="text-[14px] lg:text-[16px]">Projects</div>
-                            </div>
-                            <div
-                                className={
-                                    (currentTab == "/configuration"
-                                        ? "bg-[#333333] "
-                                        : "bg-transparent ") +
-                                    " rounded-lg flex w-full flex-start gap-3 py-3 px-4 cursor-pointer"
-                                }
+                                children="Dashboard"
+                                className="px-3.5"
+                            />
+                            <LiquidGlassSidebarItem
+                                icon="/settings.svg"
+                                isActive={currentTab === "/configuration"}
                                 onClick={() => handleTabChange("/configuration")}
-                            >
-                                <Image
-                                    src="/images/settings-icon-white.svg"
-                                    alt=""
-                                    width={width > 1024 ? 25 : 20}
-                                    height={width > 1024 ? 25 : 20}
-                                />
-                                <div className="text-[14px] lg:text-[16px]">Configuration</div>
-                            </div>
+                                children="Configuration"
+                                className="px-3.5"
+                            />
                         </div>
                     </div>
                     <div className="flex flex-col gap-3">
@@ -107,7 +89,7 @@ const Navbar = () => {
                             onClick={handleLogout}
                         >
                             <Image
-                                src="/images/logout-icon.png"
+                                src="/logout.svg"
                                 alt=""
                                 width={width > 1024 ? 25 : 20}
                                 height={width > 1024 ? 25 : 20}
@@ -131,39 +113,23 @@ const Navbar = () => {
                         }}
                     >
                         <div className="cursor-pointer w-fit" onClick={handleMenuToggle}>
-                            <Image src="/images/menu.png" alt="" width={27} height={27} />
+                            <Image src="/menu.svg" alt="" width={27} height={27} />
                         </div>
                         <div className="flex flex-col gap-3">
-                            <div
-                                className={
-                                    (currentTab == "/projects"
-                                        ? "bg-[#333333] "
-                                        : "bg-transparent ") + " rounded-md p-3 cursor-pointer"
-                                }
-                                onClick={() => handleTabChange("/projects")}
-                            >
-                                <Image
-                                    src="/images/overview-icon-black.png"
-                                    alt=""
-                                    width={25}
-                                    height={25}
-                                />
-                            </div>
-                            <div
-                                className={
-                                    (currentTab == "/settings"
-                                        ? "bg-[#333333] "
-                                        : "bg-transparent ") + " rounded-md p-3 cursor-pointer"
-                                }
-                                onClick={() => handleTabChange("/settings")}
-                            >
-                                <Image
-                                    src="/images/settings-icon-white.svg"
-                                    alt=""
-                                    width={25}
-                                    height={25}
-                                />
-                            </div>
+                            <LiquidGlassSidebarItem
+                                children=""
+                                icon="/dashboard.svg"
+                                isActive={currentTab === "/dashboard"}
+                                onClick={() => handleTabChange("/dashboard")}
+                                className="px-2"
+                            />
+                            <LiquidGlassSidebarItem
+                                icon="/settings.svg"
+                                isActive={currentTab === "/configuration"}
+                                onClick={() => handleTabChange("/configuration")}
+                                children=""
+                                className="px-2"
+                            />
                         </div>
                     </motion.div>
                     <motion.div className="flex flex-col gap-3 items-center"
@@ -180,7 +146,7 @@ const Navbar = () => {
                     >
                         <div className="p-5 rounded-full bg-blue-800"></div>
                         <Image
-                            src="/images/logout-icon.png"
+                            src="/logout.svg"
                             alt=""
                             width={25}
                             height={25}

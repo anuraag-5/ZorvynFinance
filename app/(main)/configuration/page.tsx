@@ -1,9 +1,15 @@
-import React from 'react'
+import * as motion from "motion/react-client";
 
-const Configuration = () => {
+const Dashboard = () => {
     return (
-        <div>Configuration</div>
-    )
-}
+        <motion.div
+            layout
+            className="flex-1"
+            transition={{ duration: 0.4 }}
+        >
+            Configuration
+        </motion.div>
+    );
+};
 
-export default Configuration
+export default Dashboard

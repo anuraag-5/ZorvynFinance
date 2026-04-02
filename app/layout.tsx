@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { bricolageGrotesque } from "./font";
 
 export const metadata: Metadata = {
-  title: "Zorvyn Finance",
+  title: "Zorvyn",
   description: "Finance for the Future",
 };
 
