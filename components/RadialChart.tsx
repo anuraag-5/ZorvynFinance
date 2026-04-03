@@ -1,4 +1,6 @@
 "use client";
+import * as motion from "motion/react-client";
+import Image from "next/image";
 
 import {
     RadialBarChart,
@@ -8,33 +10,31 @@ import {
 } from "recharts";
 
 export default function RadialChart({
-    width = 340,
-    height = 220,
     totalValue = 100,
     currentValue = 75,
     color = "#ffffff",
     iconSrc = "/icons/flame.png",
-}) {
+    screenWidth
+}: { totalValue: number, currentValue: number, color?: string, iconSrc: string, screenWidth: number }) {
     const percentage = Math.min(100, Math.max(0, (currentValue / totalValue) * 100));
     const data = [{ value: percentage }];
 
-    const shorter = Math.min(width, height);
-    const barSize = shorter * 0.07;
-    const iconCircleSize = shorter * 0.22;
+    const barSize = screenWidth < 768 ? 5 : 10;
+    const iconCircleSize = screenWidth < 768 ? 30 : 50;
     const iconImgSize = iconCircleSize * 0.48;
 
     return (
-        <div
-            style={{ width, height }}
-            className="bg-[#1a1a24] rounded-[20px] relative flex items-center justify-center overflow-hidden"
+        <motion.div className="relative"
+            layout
+            transition={{ duration: 0.4 }}
         >
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width={screenWidth > 768 ? 280 : 200} height={screenWidth > 768 ? 280 : 200}>
                 <RadialBarChart
                     data={data}
-                    startAngle={91}
-                    endAngle={-269}
+                    startAngle={90}
+                    endAngle={-270}
                     innerRadius="55%"
-                    outerRadius="78%"
+                    outerRadius="100%"
                     barSize={barSize}
                     cx="50%"
                     cy="50%"
@@ -49,27 +49,27 @@ export default function RadialChart({
                         dataKey="value"
                         fill={color}
                         background={{ fill: "rgba(255,255,255,0.05)" }}
-                        cornerRadius={999}
+                        cornerRadius={0}
                     />
                 </RadialBarChart>
             </ResponsiveContainer>
-
-            {/* Centre icon circle */}
-            <div
+            <motion.div
                 style={{
                     width: iconCircleSize,
                     height: iconCircleSize,
                 }}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#1a1a24] border border-white/10 flex items-center justify-center pointer-events-none"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[rgba(255,255,255,0.05)] flex items-center justify-center pointer-events-none"
+                layout
+                transition={{ duration: 0.4 }}
             >
-                <img
+                <Image
                     src={iconSrc}
                     alt="icon"
                     width={iconImgSize}
                     height={iconImgSize}
                     className="object-contain"
                 />
-            </div>
-        </div>
+            </motion.div>
+        </motion.div>
     );
 }

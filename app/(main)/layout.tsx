@@ -10,7 +10,7 @@ import { useUserStore, Transaction, Category } from "@/lib/userStore";
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
     const router = useRouter();
-    const { setUser } = useUserStore();
+    const { setUser, setIncome, setTransactions } = useUserStore();
     useEffect(() => {
         const email = localStorage.getItem("email");
         if (!email) {
@@ -25,18 +25,39 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
             return;
         }
         const income = localStorage.getItem("income");
-        const parsedIncome = income ? Number(income) : 80000;
+        const parsedIncome = income ? Number(income) : 45000;
+        if (!income) {
+            localStorage.setItem("income", parsedIncome.toString())
+        }
+
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = today.getMonth();
+        const currentDay = today.getDate();
 
         let parsedTransactions: Transaction[] = [];
         const rawTransactions = localStorage.getItem("transactions");
         if (rawTransactions) {
             parsedTransactions = JSON.parse(rawTransactions);
-        } else {
-            const today = new Date();
-            const year = today.getFullYear();
-            const month = today.getMonth();
-            const currentDay = today.getDate();
+            if (currentDay === 1) {
+                const hasIncomeThisMonth = parsedTransactions.some(t => {
+                    const date = new Date(t.date);
+                    return t.type === "income" && date.getFullYear() === year && date.getMonth() === month;
+                });
 
+                if (!hasIncomeThisMonth) {
+                    parsedTransactions.push({
+                        id: Math.random().toString(36).substring(2, 11),
+                        title: "Salary",
+                        amount: parsedIncome,
+                        type: "income",
+                        category: "Income",
+                        date: new Date(year, month, 1).toISOString(),
+                    });
+                    localStorage.setItem("transactions", JSON.stringify(parsedTransactions));
+                }
+            }
+        } else {
             const categories: Category[] = ["Food", "Transport", "Shopping", "Entertainment", "Other"];
             const titles = ["Groceries", "Uber", "Amazon", "Netflix", "Misc"];
 
@@ -67,7 +88,9 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
             localStorage.setItem("transactions", JSON.stringify(parsedTransactions));
         }
 
-        setUser({ email, income: parsedIncome, transactions: parsedTransactions });
+        setUser(email);
+        setIncome(parsedIncome);
+        setTransactions(parsedTransactions);
     }, [])
     return (
         <LayoutGroup>
