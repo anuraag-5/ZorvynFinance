@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { LayoutGroup } from "motion/react";
 import { signOut } from "@/lib/auth";
 import { useUserStore, Transaction, Category } from "@/lib/userStore";
+import NavbarMobile from "@/components/MobileNav";
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
     const router = useRouter();
@@ -94,7 +95,8 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
     }, [])
     return (
         <LayoutGroup>
-            <motion.div layout className="flex-1 flex">
+            <motion.div layout className="flex-1 flex flex-col md:flex-row">
+                <NavbarMobile />
                 <Navbar />
                 {children}
             </motion.div>
