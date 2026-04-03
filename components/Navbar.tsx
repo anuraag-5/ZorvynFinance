@@ -3,7 +3,8 @@
 import * as motion from "motion/react-client";
 import Image from "next/image";
 import useWidth from "@/lib/hooks";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import { useUserStore } from "@/lib/userStore";
@@ -16,6 +17,17 @@ const Navbar = () => {
     const [open, setOpen] = useState(true);
     const [currentTab, setCurrentTab] = useState(usePathname());
     const { user } = useUserStore();
+    const { theme, setTheme } = useTheme();
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+        setTheme("dark");
+    }, []);
+
+    const toggleTheme = () => {
+        setTheme(theme === "dark" ? "light" : "dark");
+    };
 
     const handleMenuToggle = () => setOpen((initialValue) => !initialValue);
     const handleTabChange = (tab: string) => {
@@ -72,6 +84,13 @@ const Navbar = () => {
                                 children="Configuration"
                                 className="px-3.5"
                             />
+                            <LiquidGlassSidebarItem
+                                icon={mounted ? (theme === "dark" ? "/night-mode.svg" : "/light-mode.svg") : "/light-mode.svg"}
+                                isActive={false}
+                                onClick={toggleTheme}
+                                children={mounted ? (theme === "dark" ? "Dark Mode" : "Light Mode") : "Light Mode"}
+                                className="px-3.5"
+                            />
                         </div>
                     </div>
                     <div className="flex flex-col gap-3">
@@ -79,7 +98,7 @@ const Navbar = () => {
                             <div className="p-5 lg:p-6 w-fit rounded-full bg-blue-800"></div>
                             <div className="flex flex-col">
                                 <div className="text-[10px] lg:text-[12px]">{user?.name}</div>
-                                <div className="text-[8px] lg:text-[10px] text-[#A0A0A0]">
+                                <div className="text-[8px] lg:text-[10px] text-[#5b5b5b]">
                                     {user?.email}
                                 </div>
                             </div>
@@ -127,6 +146,13 @@ const Navbar = () => {
                                 icon="/settings.svg"
                                 isActive={currentTab === "/configuration"}
                                 onClick={() => handleTabChange("/configuration")}
+                                children=""
+                                className="px-2"
+                            />
+                            <LiquidGlassSidebarItem
+                                icon={mounted ? (theme === "dark" ? "/night-mode.svg" : "/light-mode.svg") : "/light-mode.svg"}
+                                isActive={false}
+                                onClick={toggleTheme}
                                 children=""
                                 className="px-2"
                             />

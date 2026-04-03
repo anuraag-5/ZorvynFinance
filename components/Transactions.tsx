@@ -129,7 +129,7 @@ const Transactions = () => {
         >
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div className="flex gap-4 items-center">
-                    <h2 className="text-lg md:text-2xl font-semibold">Transactions</h2>
+                    <h2 className="text-lg md:text-2xl font-semibold text-white">Transactions</h2>
                     <div className="flex items-center gap-2 bg-[#2a2a36] rounded-full p-1 border border-[#3e3e50]">
                         <button
                             className={`px-3 py-1 text-sm rounded-full transition-colors ${role === "Viewer" ? "bg-[#FFCC00] text-black" : "text-gray-400"}`}

@@ -2,21 +2,39 @@
 
 import * as motion from "motion/react-client";
 import Image from "next/image";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useTheme } from "next-themes";
+import { usePathname, useRouter } from "next/navigation";
 import { useUserStore } from "@/lib/userStore";
 import useWidth from "@/lib/hooks";
 import { signOut } from "@/lib/auth";
+import { LiquidGlassSidebarItem } from "./LiquidSidebar";
 
 const NavbarMobile = () => {
     const width = useWidth();
     const { user } = useUserStore();
     const router = useRouter();
     const [open, setOpen] = useState(false);
+    const [currentTab, setCurrentTab] = useState(usePathname());
+    const { theme, setTheme } = useTheme();
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+        setTheme("dark");
+    }, []);
+
+    const toggleTheme = () => {
+        setTheme(theme === "dark" ? "light" : "dark");
+    };
 
     const handleLogout = async () => {
         signOut();
         router.replace("/");
+    };
+    const handleTabChange = (tab: string) => {
+        setCurrentTab(tab);
+        router.push(tab);
     };
     return (
         <div className="flex md:hidden justify-between items-center p-5">
@@ -48,12 +66,12 @@ const NavbarMobile = () => {
             )}
             {open ? (
                 <motion.div
-                    className="absolute top-0 bottom-0 left-0 right-0 bg-black z-30 flex flex-col justify-evenly items-center gap-5"
+                    className="fixed top-0 bottom-0 left-0 right-0 bg-white dark:bg-black z-30 flex flex-col justify-evenly items-center gap-5"
                     initial={{
                         opacity: 0,
                     }}
                     animate={{
-                        opacity: 0.8,
+                        opacity: 1,
                     }}
                     transition={{
                         duration: 1.1,
@@ -61,24 +79,27 @@ const NavbarMobile = () => {
                 >
                     <motion.div className="h-[90%] flex flex-col justify-evenly">
                         <motion.div className="flex flex-col gap-4">
-                            <motion.div
-                                className="text-3xl cursor-pointer font-semibold"
-                                onClick={() => {
-                                    setOpen(false);
-                                    router.push("/dashboard");
-                                }}
-                            >
-                                Dashboard
-                            </motion.div>
-                            <motion.div
-                                className="text-3xl cursor-pointer font-semibold"
-                                onClick={() => {
-                                    setOpen(false);
-                                    router.push("/configuration");
-                                }}
-                            >
-                                Configuration
-                            </motion.div>
+                            <LiquidGlassSidebarItem
+                                icon="/dashboard.svg"
+                                isActive={currentTab === "/dashboard"}
+                                onClick={() => handleTabChange("/dashboard")}
+                                children="Dashboard"
+                                className="px-3.5"
+                            />
+                            <LiquidGlassSidebarItem
+                                icon="/settings.svg"
+                                isActive={currentTab === "/configuration"}
+                                onClick={() => handleTabChange("/configuration")}
+                                children="Configuration"
+                                className="px-3.5"
+                            />
+                            <LiquidGlassSidebarItem
+                                icon={mounted ? (theme === "dark" ? "/night-mode.svg" : "/light-mode.svg") : "/light-mode.svg"}
+                                isActive={false}
+                                onClick={toggleTheme}
+                                children={mounted ? (theme === "dark" ? "Dark Mode" : "Light Mode") : "Light Mode"}
+                                className="px-3.5"
+                            />
                         </motion.div>
                         <motion.div className="flex flex-col gap-5">
                             <div className="flex gap-3 items-center w-full">

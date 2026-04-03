@@ -68,11 +68,11 @@ const Dashboard = () => {
                 <motion.div
                     layout
                     transition={{ duration: 0.4 }}
-                    className={"relative text-[#FFCC00] p-3 rounded-lg cursor-pointer text-xs md:text-[16px]"}
+                    className={"relative text-black dark:text-[#FFCC00] p-3 rounded-lg cursor-pointer text-xs md:text-[16px]"}
                     onClick={() => setCurrentTab("Dashboard")}
                 >
                     {
-                        currentTab === "Dashboard" && <motion.div className="absolute inset-0 bg-[#4f4932] rounded-lg z-0"
+                        currentTab === "Dashboard" && <motion.div className="absolute inset-0 bg-[#FFCC00] dark:bg-[#4f4932] rounded-lg z-0"
                             layoutId="tab-bg"
                         ></motion.div>
                     }
@@ -81,11 +81,11 @@ const Dashboard = () => {
                 <motion.div
                     layout
                     transition={{ duration: 0.4 }}
-                    className={"relative text-[#FFCC00] p-3 rounded-lg cursor-pointer  text-xs md:text-[16px]"}
+                    className={"relative text-black dark:text-[#FFCC00] p-3 rounded-lg cursor-pointer  text-xs md:text-[16px]"}
                     onClick={() => setCurrentTab("Transactions")}
                 >
                     {
-                        currentTab === "Transactions" && <motion.div className="absolute inset-0 bg-[#4f4932] rounded-lg z-0"
+                        currentTab === "Transactions" && <motion.div className="absolute inset-0 bg-[#FFCC00] dark:bg-[#4f4932] rounded-lg z-0"
                             layoutId="tab-bg"
                         ></motion.div>
                     }
@@ -94,11 +94,11 @@ const Dashboard = () => {
                 <motion.div
                     layout
                     transition={{ duration: 0.4 }}
-                    className={"relative text-[#FFCC00] p-3 rounded-lg cursor-pointer  text-xs md:text-[16px]"}
+                    className={"relative text-black dark:text-[#FFCC00] p-3 rounded-lg cursor-pointer  text-xs md:text-[16px]"}
                     onClick={() => setCurrentTab("Insights")}
                 >
                     {
-                        currentTab === "Insights" && <motion.div className="absolute inset-0 bg-[#4f4932] rounded-lg z-0"
+                        currentTab === "Insights" && <motion.div className="absolute inset-0 bg-[#FFCC00] dark:bg-[#4f4932] rounded-lg z-0"
                             layoutId="tab-bg"
                         ></motion.div>
                     }
@@ -117,7 +117,7 @@ const Dashboard = () => {
                             <motion.div className="grid grid-cols-1 xl:grid-cols-2 gap-3 place-items-center md:place-items-start">
                                 <motion.div className="w-full h-full">
                                     <motion.div
-                                        className="bg-[#1a1a24] rounded-[20px] flex md:gap-2 md:pl-9 md:pr-6 pl-6 pr-3 justify-between items-center min-h-full"
+                                        className="bg-[#1a1a24] text-white rounded-[20px] flex md:gap-2 md:pl-9 md:pr-6 pl-6 pr-3 justify-between items-center min-h-full"
                                         layout
                                         transition={{ duration: 0.4 }}
                                     >
@@ -144,7 +144,7 @@ const Dashboard = () => {
                                 <motion.div className="flex flex-col justify-between gap-3 w-full h-full">
                                     <motion.div>
                                         <motion.div
-                                            className="bg-[#1a1a24] rounded-[20px] flex md:gap-2 md:pl-9 md:pr-6 pl-6 pr-3 justify-between items-center"
+                                            className="bg-[#1a1a24] text-white rounded-[20px] flex md:gap-2 md:pl-9 md:pr-6 pl-6 pr-3 justify-between items-center"
                                             layout
                                             transition={{ duration: 0.4 }}
                                         >
@@ -171,7 +171,7 @@ const Dashboard = () => {
                                     </motion.div>
                                     <motion.div>
                                         <motion.div
-                                            className="bg-[#1a1a24] rounded-[20px] flex md:gap-2 md:pl-9 md:pr-6 pl-6 pr-3 justify-between items-center"
+                                            className="bg-[#1a1a24] text-white rounded-[20px] flex md:gap-2 md:pl-9 md:pr-6 pl-6 pr-3 justify-between items-center"
                                             layout
                                             transition={{ duration: 0.4 }}
                                         >
@@ -200,11 +200,11 @@ const Dashboard = () => {
                             </motion.div>
                         </motion.div>
                         <motion.div className="flex flex-col xl:flex-row gap-5 w-full mt-5">
-                            <motion.div className="bg-[#1a1a24] rounded-[20px] p-5 w-full xl:w-2/3">
+                            <motion.div className="bg-[#1a1a24] text-white rounded-[20px] p-5 w-full xl:w-2/3">
                                 <div className="mb-14 text-xl">Time Based Visualisation (Monthly)</div>
                                 <AreaChartGraph data={chartData} width={width} />
                             </motion.div>
-                            <motion.div className="bg-[#1a1a24] rounded-[20px] p-5 w-full xl:w-1/3">
+                            <motion.div className="bg-[#1a1a24] text-white rounded-[20px] p-5 w-full xl:w-1/3">
                                 <div className="mb-4 text-xl">Categorical Expenses</div>
                                 <PieChartWithCustomizedLabel data={pieChartData} />
                             </motion.div>

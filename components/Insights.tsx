@@ -80,7 +80,7 @@ const Insights = () => {
 
     return (
         <motion.div
-            className="flex flex-col gap-5 w-full max-h-screen overflow-y-auto custom-scrollbar pb-10"
+            className="flex flex-col gap-5 w-full max-h-screen overflow-y-auto custom-scrollbar pb-10 text-white"
             layout
             transition={{ duration: 0.4 }}
         >

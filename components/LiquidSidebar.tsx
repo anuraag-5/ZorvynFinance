@@ -31,7 +31,7 @@ export function LiquidGlassSidebarItem({
         <a
             className={cn(
                 "relative flex items-center gap-3 py-1 rounded-xl text-sm font-medium cursor-pointer transition-colors",
-                isActive ? "text-white" : "text-zinc-500 hover:text-zinc-300 hover:bg-white/5",
+                isActive ? "dark:text-white text-black" : "dark:text-white text-black hover:text-zinc-300 hover:bg-white/5",
                 className
             )}
             {...props}
