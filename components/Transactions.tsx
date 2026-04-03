@@ -52,11 +52,11 @@ const Transactions = () => {
     const saveTransactionList = (newTransactions: Transaction[]) => {
         setTransactions(newTransactions);
         localStorage.setItem("transactions", JSON.stringify(newTransactions));
-        
+
         const newTotalIncome = newTransactions
             .filter(t => t.type === "income")
             .reduce((sum, t) => sum + t.amount, 0);
-            
+
         setIncome(newTotalIncome);
         localStorage.setItem("income", newTotalIncome.toString());
     }
@@ -150,7 +150,7 @@ const Transactions = () => {
                         onClick={() => openModal()}
                         className="bg-[#FFCC00] text-black px-4 py-2 rounded-lg text-sm font-semibold hover:bg-yellow-500 transition-colors"
                     >
-                        + Add Transaction
+                        + Add
                     </button>
                 )}
             </div>

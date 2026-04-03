@@ -5,7 +5,7 @@ import * as motion from "motion/react-client";
 import { useUserStore } from "@/lib/userStore";
 
 const Configuration = () => {
-    const { setUser, setIncome } = useUserStore();
+    const { user, setUser, setIncome, setTransactions } = useUserStore();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [income, setIncomeVal] = useState("");
@@ -30,9 +30,26 @@ const Configuration = () => {
         localStorage.setItem("password", password);
         localStorage.setItem("income", income);
         setUser(email);
-        setIncome(Number(income));
+        
+        let tx = user?.transactions || [];
+        const newIncomeVal = Number(income);
+        const baseIncomeTxIndex = tx.findIndex(t => t.type === "income");
+        
+        if (baseIncomeTxIndex !== -1) {
+            tx = [...tx];
+            tx[baseIncomeTxIndex] = { ...tx[baseIncomeTxIndex], amount: newIncomeVal };
+            setTransactions(tx);
+            localStorage.setItem("transactions", JSON.stringify(tx));
+        }
 
-        setMessage("Credentials updated successfully!");
+        const newTotalIncome = tx
+            .filter(t => t.type === "income")
+            .reduce((sum, t) => sum + t.amount, 0);
+
+        setIncome(newTotalIncome);
+        localStorage.setItem("income", newTotalIncome.toString());
+
+        setMessage("Credentials & Income updated successfully!");
 
         setTimeout(() => {
             setMessage("");
