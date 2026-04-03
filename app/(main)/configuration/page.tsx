@@ -5,16 +5,19 @@ import * as motion from "motion/react-client";
 import { useUserStore } from "@/lib/userStore";
 
 const Configuration = () => {
-    const { setUser } = useUserStore();
+    const { setUser, setIncome } = useUserStore();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [income, setIncomeVal] = useState("");
     const [message, setMessage] = useState("");
 
     useEffect(() => {
         const storedEmail = localStorage.getItem("email") || "";
         const storedPassword = localStorage.getItem("password") || "";
+        const storedIncome = localStorage.getItem("income") || "80000";
         setEmail(storedEmail);
         setPassword(storedPassword);
+        setIncomeVal(storedIncome);
     }, []);
 
     const handleSave = () => {
@@ -25,7 +28,9 @@ const Configuration = () => {
 
         localStorage.setItem("email", email);
         localStorage.setItem("password", password);
+        localStorage.setItem("income", income);
         setUser(email);
+        setIncome(Number(income));
 
         setMessage("Credentials updated successfully!");
 
@@ -63,6 +68,17 @@ const Configuration = () => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="Enter new password"
+                        />
+                    </div>
+
+                    <div className="flex flex-col gap-2">
+                        <label className="text-sm font-medium text-gray-400">Total Base Income</label>
+                        <input
+                            type="number"
+                            className="bg-[#2a2a36] text-white px-4 py-3 rounded-lg border border-[#3e3e50] focus:outline-none focus:border-[#FFCC00] transition-colors"
+                            value={income}
+                            onChange={(e) => setIncomeVal(e.target.value)}
+                            placeholder="Enter base income"
                         />
                     </div>
 

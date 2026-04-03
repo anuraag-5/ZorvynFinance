@@ -93,7 +93,7 @@ const Insights = () => {
 
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-5 w-full">
                 <div className="bg-[#1a1a24] rounded-[20px] p-6 border border-[#3e3e50] flex flex-col items-center justify-between min-h-[400px]">
-                    <h3 className="text-xl font-semibold mb-4 w-full text-left">Category Breakdown (Current Month)</h3>
+                    <h3 className="text-xl font-semibold mb-4 w-full text-left">Highest Spending</h3>
                     {radarData.length > 0 ? (
                         <div className="w-full flex-1 ml-[-20px] md:ml-0 overflow-visible">
                             <SimpleRadarChart data={radarData} />

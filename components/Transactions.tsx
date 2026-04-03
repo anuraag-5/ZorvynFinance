@@ -7,7 +7,7 @@ import { useUserStore, Transaction, Category } from "@/lib/userStore";
 type Role = "Viewer" | "Admin";
 
 const Transactions = () => {
-    const { user, setTransactions } = useUserStore();
+    const { user, setTransactions, setIncome } = useUserStore();
     const transactions = user?.transactions || [];
 
     const [role, setRole] = useState<Role>("Viewer");
@@ -52,6 +52,13 @@ const Transactions = () => {
     const saveTransactionList = (newTransactions: Transaction[]) => {
         setTransactions(newTransactions);
         localStorage.setItem("transactions", JSON.stringify(newTransactions));
+        
+        const newTotalIncome = newTransactions
+            .filter(t => t.type === "income")
+            .reduce((sum, t) => sum + t.amount, 0);
+            
+        setIncome(newTotalIncome);
+        localStorage.setItem("income", newTotalIncome.toString());
     }
 
     const saveTransaction = () => {

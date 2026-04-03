@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import { useUserStore } from "@/lib/userStore";
 import { LiquidGlassSidebarItem } from "./LiquidSidebar";
-import { Folders, Settings } from "lucide-react"
 import { signOut } from "@/lib/auth";
 
 const Navbar = () => {
