@@ -4,6 +4,7 @@ import * as motion from "motion/react-client";
 import useWidth from "@/lib/hooks";
 import SummaryCard from "@/components/SummaryCard";
 import AreaChartGraph from "@/components/AreaChartGraph";
+import PieChartWithCustomizedLabel from "@/components/PieChart";
 import { useUserStore } from "@/lib/userStore";
 import { useState } from "react";
 
@@ -27,6 +28,16 @@ const Dashboard = () => {
         }
         return acc;
     }, 0) || 0;
+
+    const pieChartData = Array.from(transactions?.reduce((acc, t) => {
+        const date = new Date(t.date);
+        const isCurrentMonth = date.getMonth() === currentMonth && date.getFullYear() === currentYear;
+        if (isCurrentMonth && t.type === "expense" && t.category !== "Income") {
+            const currentVal = acc.get(t.category) || 0;
+            acc.set(t.category, currentVal + t.amount);
+        }
+        return acc;
+    }, new Map<string, number>()) || []).map(([name, value]) => ({ name, value, totalIncome }));
 
     const currentDay = today.getDate();
     const chartData = Array.from({ length: currentDay }, (_, i) => {
@@ -169,9 +180,15 @@ const Dashboard = () => {
                     </motion.div>
                 </motion.div>
             </motion.div>
-            <motion.div className="bg-[#1a1a24] rounded-[20px] p-5 w-full">
-                <div className="mb-14 text-xl">Time Based Visualisation (Monthly)</div>
-                <AreaChartGraph data={chartData} width={width} />
+            <motion.div className="flex flex-col xl:flex-row gap-5 w-full mt-5">
+                <motion.div className="bg-[#1a1a24] rounded-[20px] p-5 w-full xl:w-2/3">
+                    <div className="mb-14 text-xl">Time Based Visualisation (Monthly)</div>
+                    <AreaChartGraph data={chartData} width={width} />
+                </motion.div>
+                <motion.div className="bg-[#1a1a24] rounded-[20px] p-5 w-full xl:w-1/3">
+                    <div className="mb-4 text-xl">Categorical Expenses</div>
+                    <PieChartWithCustomizedLabel data={pieChartData} />
+                </motion.div>
             </motion.div>
         </motion.div>
     );
