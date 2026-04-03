@@ -8,6 +8,7 @@ import PieChartWithCustomizedLabel from "@/components/PieChart";
 import { useUserStore } from "@/lib/userStore";
 import { useState } from "react";
 import Transactions from "@/components/Transactions";
+import Insights from "@/components/Insights";
 
 const Dashboard = () => {
     const { user } = useUserStore();
@@ -64,32 +65,45 @@ const Dashboard = () => {
                 layout
                 transition={{ duration: 0.4 }}
             >
-                                <motion.div
-                                    layout
-                                    transition={{ duration: 0.4 }}
-                                    className={"relative text-[#FFCC00] p-3 rounded-lg cursor-pointer "}
-                                    onClick={() => setCurrentTab("Dashboard")}
-                                >
-                                    {
-                                        currentTab === "Dashboard" && <motion.div className="absolute inset-0 bg-[#4f4932] rounded-lg z-0"
-                                            layoutId="tab-bg"
-                                        ></motion.div>
-                                    }
-                                    <motion.div className="relative z-10">Dashboard</motion.div>
-                                </motion.div>
-                                <motion.div
-                                    layout
-                                    transition={{ duration: 0.4 }}
-                                    className={"relative text-[#FFCC00] p-3 rounded-lg cursor-pointer "}
-                                    onClick={() => setCurrentTab("Transactions")}
-                                >
-                                    {
-                                        currentTab === "Transactions" && <motion.div className="absolute inset-0 bg-[#4f4932] rounded-lg z-0"
-                                            layoutId="tab-bg"
-                                        ></motion.div>
-                                    }
-                                    <motion.div className="relative z-10">Transactions</motion.div>
-                                </motion.div>
+                <motion.div
+                    layout
+                    transition={{ duration: 0.4 }}
+                    className={"relative text-[#FFCC00] p-3 rounded-lg cursor-pointer text-xs md:text-[16px]"}
+                    onClick={() => setCurrentTab("Dashboard")}
+                >
+                    {
+                        currentTab === "Dashboard" && <motion.div className="absolute inset-0 bg-[#4f4932] rounded-lg z-0"
+                            layoutId="tab-bg"
+                        ></motion.div>
+                    }
+                    <motion.div className="relative z-10">Dashboard</motion.div>
+                </motion.div>
+                <motion.div
+                    layout
+                    transition={{ duration: 0.4 }}
+                    className={"relative text-[#FFCC00] p-3 rounded-lg cursor-pointer  text-xs md:text-[16px]"}
+                    onClick={() => setCurrentTab("Transactions")}
+                >
+                    {
+                        currentTab === "Transactions" && <motion.div className="absolute inset-0 bg-[#4f4932] rounded-lg z-0"
+                            layoutId="tab-bg"
+                        ></motion.div>
+                    }
+                    <motion.div className="relative z-10">Transactions</motion.div>
+                </motion.div>
+                <motion.div
+                    layout
+                    transition={{ duration: 0.4 }}
+                    className={"relative text-[#FFCC00] p-3 rounded-lg cursor-pointer  text-xs md:text-[16px]"}
+                    onClick={() => setCurrentTab("Insights")}
+                >
+                    {
+                        currentTab === "Insights" && <motion.div className="absolute inset-0 bg-[#4f4932] rounded-lg z-0"
+                            layoutId="tab-bg"
+                        ></motion.div>
+                    }
+                    <motion.div className="relative z-10">Insights</motion.div>
+                </motion.div>
             </motion.div>
 
             {
@@ -196,9 +210,15 @@ const Dashboard = () => {
                             </motion.div>
                         </motion.div>
                     </>
-                ) : (
+                ) : currentTab === "Transactions" ? (
+
                     <motion.div className="flex-1 flex max-h-min" layout>
                         <Transactions />
+                    </motion.div>
+
+                ) : (
+                    <motion.div className="flex-1 flex" layout>
+                        <Insights />
                     </motion.div>
                 )
             }

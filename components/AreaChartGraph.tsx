@@ -9,7 +9,7 @@ import {
 } from "recharts";
 
 interface ChartData {
-    date: number;
+    date: number | string;
     expense: number;
 }
 
@@ -24,7 +24,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
                 padding: "10px 16px",
             }}
         >
-            <p style={{ margin: 0, color: "#888", fontSize: "12px" }}>Day {label}</p>
+            <p style={{ margin: 0, color: "#888", fontSize: "12px" }}>{typeof label === 'number' || !isNaN(Number(label)) ? `Day ${label}` : label}</p>
             <p style={{ margin: "4px 0 0", color: "#FFCC00", fontSize: "18px", fontWeight: 600 }}>
                 ₹{Number(payload[0].value).toLocaleString("en-IN")}
             </p>
@@ -56,13 +56,7 @@ const AreaChartGraph = ({ data, width }: { data: ChartData[], width: number }) =
                     axisLine={false}
                     tickLine={false}
                     tick={{ fill: "#666", fontSize: 12 }}
-                    label={{
-                        value: "Day of Month",
-                        position: "insideBottom",
-                        offset: -15,
-                        fill: "#555",
-                        fontSize: 12,
-                    }}
+                    tickFormatter={width > 768 ? undefined : (val) => val}
                 />
 
                 <YAxis
