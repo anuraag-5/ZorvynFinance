@@ -14,7 +14,7 @@ const renderCustomizedLabel = (props: any) => {
 
     return (
         <g>
-            <text x={x} y={y - 8} fill="#fff" fontSize={12} fontWeight={600} textAnchor="middle" dominantBaseline="central">
+            <text x={x} y={y - 8} fill="#fff" fontSize={9} fontWeight={600} textAnchor="middle" dominantBaseline="central">
                 {payload.name}
             </text>
             <text x={x} y={y + 8} fill="rgba(0,0,0,1)" fontSize={11} textAnchor="middle" dominantBaseline="central">
