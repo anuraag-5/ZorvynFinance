@@ -80,22 +80,36 @@ const Transactions = () => {
     };
 
     const processedList = useMemo(() => {
-        let list = transactions.filter((t) => {
+        let mapped = transactions.map((t, index) => ({ t, index }));
+
+        mapped = mapped.filter(({ t }) => {
             const matchesSearch = t.title.toLowerCase().includes(searchQuery.toLowerCase());
             const matchesType = filterType === "All" || t.type === filterType;
             const matchesCategory = filterCategory === "All" || t.category === filterCategory;
             return matchesSearch && matchesType && matchesCategory;
         });
 
-        list.sort((a, b) => {
-            if (sortOrder === "date-desc") return new Date(b.date).getTime() - new Date(a.date).getTime();
-            if (sortOrder === "date-asc") return new Date(a.date).getTime() - new Date(b.date).getTime();
-            if (sortOrder === "amount-desc") return b.amount - a.amount;
-            if (sortOrder === "amount-asc") return a.amount - b.amount;
+        mapped.sort((a, b) => {
+            if (sortOrder === "date-desc") {
+                const diff = new Date(b.t.date).getTime() - new Date(a.t.date).getTime();
+                return diff === 0 ? b.index - a.index : diff;
+            }
+            if (sortOrder === "date-asc") {
+                const diff = new Date(a.t.date).getTime() - new Date(b.t.date).getTime();
+                return diff === 0 ? a.index - b.index : diff;
+            }
+            if (sortOrder === "amount-desc") {
+                const diff = b.t.amount - a.t.amount;
+                return diff === 0 ? b.index - a.index : diff;
+            }
+            if (sortOrder === "amount-asc") {
+                const diff = a.t.amount - b.t.amount;
+                return diff === 0 ? a.index - b.index : diff;
+            }
             return 0;
         });
 
-        return list;
+        return mapped.map(item => item.t);
     }, [transactions, searchQuery, filterType, filterCategory, sortOrder]);
 
     const categories: Category[] = ["Food", "Transport", "Shopping", "Entertainment", "Other", "Income"];
@@ -203,11 +217,11 @@ const Transactions = () => {
                                         </span>
                                     </td>
                                     <td className="p-4">
-                                        <span className={`px-2 py-1 rounded text-xs ${t.type === 'income' ? 'bg-[#DE6969]/10 text-[#DE6969]' : 'bg-[#4482DF]/10 text-[#4482DF]'}`}>
+                                        <span className={`px-2 py-1 rounded text-xs ${t.type === 'income' ? 'bg-[#22c55e]/10 text-[#22c55e]' : 'bg-[#4482DF]/10 text-[#4482DF]'}`}>
                                             {t.type === "income" ? "Income" : "Expense"}
                                         </span>
                                     </td>
-                                    <td className={`p-4 font-semibold ${t.type === 'income' ? 'text-[#DE6969]' : 'text-white'}`}>
+                                    <td className={`p-4 font-semibold ${t.type === 'income' ? 'text-[#22c55e]' : 'text-white'}`}>
                                         ${t.amount.toLocaleString()}
                                     </td>
                                     {role === "Admin" && (
