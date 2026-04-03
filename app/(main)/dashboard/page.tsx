@@ -3,10 +3,13 @@
 import * as motion from "motion/react-client";
 import useWidth from "@/lib/hooks";
 import SummaryCard from "@/components/SummaryCard";
+import AreaChartGraph from "@/components/AreaChartGraph";
 import { useUserStore } from "@/lib/userStore";
+import { useState } from "react";
 
 const Dashboard = () => {
     const { user } = useUserStore();
+    const [currentTab, setCurrentTab] = useState("Dashboard");
     const width = useWidth();
     const transactions = user?.transactions;
 
@@ -24,6 +27,20 @@ const Dashboard = () => {
         }
         return acc;
     }, 0) || 0;
+
+    const currentDay = today.getDate();
+    const chartData = Array.from({ length: currentDay }, (_, i) => {
+        const day = i + 1;
+        const totalDayExpense = transactions?.reduce((acc, transaction) => {
+            const date = new Date(transaction.date);
+            const isTargetDay = date.getDate() === day && date.getMonth() === currentMonth && date.getFullYear() === currentYear;
+            if (isTargetDay && (transaction.category !== "Income" && transaction.type === "expense")) {
+                return acc + transaction.amount;
+            }
+            return acc;
+        }, 0) || 0;
+        return { date: day, expense: totalDayExpense };
+    });
     return (
         <motion.div
             layout
@@ -31,38 +48,56 @@ const Dashboard = () => {
             transition={{ duration: 0.4 }}
         >
             <motion.div
-                className="flex flex-col gap-3"
+                className="flex flex-col gap-6 xl:gap-10 mt-5"
                 layout
                 transition={{ duration: 0.4 }}
             >
                 <motion.div
-                    className="flex gap-3"
+                    className="flex gap-5"
                     layout
                     transition={{ duration: 0.4 }}
                 >
                     <motion.div
                         layout
                         transition={{ duration: 0.4 }}
-                    >Dashboard</motion.div>
+                        className={"relative text-[#FFCC00] p-3 rounded-lg cursor-pointer "}
+                        onClick={() => setCurrentTab("Dashboard")}
+                    >
+                        {
+                            currentTab === "Dashboard" && <motion.div className="absolute inset-0 bg-[#4f4932] rounded-lg z-0"
+                                layoutId="tab-bg"
+                            ></motion.div>
+                        }
+                        <motion.div className="relative z-10">Dashboard</motion.div>
+                    </motion.div>
                     <motion.div
                         layout
                         transition={{ duration: 0.4 }}
-                    >Transactions</motion.div>
+                        className={"relative text-[#FFCC00] p-3 rounded-lg cursor-pointer "}
+                        onClick={() => setCurrentTab("Transactions")}
+                    >
+                        {
+                            currentTab === "Transactions" && <motion.div className="absolute inset-0 bg-[#4f4932] rounded-lg z-0"
+                                layoutId="tab-bg"
+                            ></motion.div>
+                        }
+                        <motion.div className="relative z-10">Transactions</motion.div>
+                    </motion.div>
                 </motion.div>
-                <motion.div className="grid grid-cols-1 xl:grid-cols-2 gap-6 place-items-center md:place-items-start">
-                    <motion.div className="w-full max-w-[540px]">
+                <motion.div className="grid grid-cols-1 xl:grid-cols-2 gap-3 place-items-center md:place-items-start">
+                    <motion.div className="w-full h-full">
                         <motion.div
-                            className="bg-[#1a1a24] rounded-[20px] flex md:gap-2 md:pl-9 md:pr-6 pl-6 pr-3 justify-between items-center"
+                            className="bg-[#1a1a24] rounded-[20px] flex md:gap-2 md:pl-9 md:pr-6 pl-6 pr-3 justify-between items-center min-h-full"
                             layout
                             transition={{ duration: 0.4 }}
                         >
                             <motion.div
                                 layout
                                 transition={{ duration: 0.4 }}>
-                                <motion.div className="text-2xl md:text-4xl"
+                                <motion.div className="text-2xl md:text-4xl xl:text-6xl"
                                     layout
                                     transition={{ duration: 0.4 }}>{totalIncome - totalExpenses}</motion.div>
-                                <motion.div className="text-[8px] md:text-xs"
+                                <motion.div className="text-[10px] md:text-sm"
                                     layout
                                     transition={{ duration: 0.4 }}>Balance Left</motion.div>
                             </motion.div>
@@ -72,10 +107,11 @@ const Dashboard = () => {
                                 currentValue={totalExpenses}
                                 screenWidth={width}
                                 iconSrc="/money.svg"
+                                type="Balance"
                             />
                         </motion.div>
                     </motion.div>
-                    <motion.div className="flex flex-col gap-2 w-full max-w-[540px]">
+                    <motion.div className="flex flex-col justify-between gap-3 w-full h-full">
                         <motion.div>
                             <motion.div
                                 className="bg-[#1a1a24] rounded-[20px] flex md:gap-2 md:pl-9 md:pr-6 pl-6 pr-3 justify-between items-center"
@@ -87,10 +123,37 @@ const Dashboard = () => {
                                     transition={{ duration: 0.4 }}>
                                     <motion.div className="text-2xl md:text-4xl"
                                         layout
-                                        transition={{ duration: 0.4 }}>{totalIncome - totalExpenses}</motion.div>
+                                        transition={{ duration: 0.4 }}>{totalIncome}</motion.div>
                                     <motion.div className="text-[8px] md:text-xs"
                                         layout
-                                        transition={{ duration: 0.4 }}>Balance Left</motion.div>
+                                        transition={{ duration: 0.4 }}>Total Income</motion.div>
+                                </motion.div>
+                                <SummaryCard
+                                    classname=""
+                                    totalValue={totalIncome}
+                                    currentValue={totalIncome}
+                                    screenWidth={width}
+                                    iconSrc="/money.svg"
+                                    type="Income"
+                                    color="#DE6969"
+                                />
+                            </motion.div>
+                        </motion.div>
+                        <motion.div>
+                            <motion.div
+                                className="bg-[#1a1a24] rounded-[20px] flex md:gap-2 md:pl-9 md:pr-6 pl-6 pr-3 justify-between items-center"
+                                layout
+                                transition={{ duration: 0.4 }}
+                            >
+                                <motion.div
+                                    layout
+                                    transition={{ duration: 0.4 }}>
+                                    <motion.div className="text-2xl md:text-4xl"
+                                        layout
+                                        transition={{ duration: 0.4 }}>{totalExpenses}</motion.div>
+                                    <motion.div className="text-[8px] md:text-xs"
+                                        layout
+                                        transition={{ duration: 0.4 }}>Total Expense</motion.div>
                                 </motion.div>
                                 <SummaryCard
                                     classname=""
@@ -98,17 +161,20 @@ const Dashboard = () => {
                                     currentValue={totalExpenses}
                                     screenWidth={width}
                                     iconSrc="/money.svg"
+                                    type="Expense"
+                                    color="#4482DF"
                                 />
                             </motion.div>
                         </motion.div>
-                        <motion.div></motion.div>
                     </motion.div>
                 </motion.div>
             </motion.div>
-            <div></div>
-            <div></div>
+            <motion.div className="bg-[#1a1a24] rounded-[20px] p-5 w-full">
+                <div className="mb-14 text-xl">Time Based Visualisation (Monthly)</div>
+                <AreaChartGraph data={chartData} width={width} />
+            </motion.div>
         </motion.div>
     );
 };
 
-export default Dashboard
+export default Dashboard;

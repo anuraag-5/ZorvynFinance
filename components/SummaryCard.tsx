@@ -1,7 +1,7 @@
 import * as motion from "motion/react-client";
 import RadialChart from "./RadialChart";
 
-const SummaryCard = ({ classname, totalValue, currentValue, color, iconSrc, screenWidth }: { classname: string, totalValue: number, currentValue: number, color?: string, iconSrc: string, screenWidth: number }) => {
+const SummaryCard = ({ classname, totalValue, currentValue, color, iconSrc, screenWidth, type }: { classname: string, totalValue: number, currentValue: number, color?: string, iconSrc: string, screenWidth: number, type: string }) => {
 
     return (
         <motion.div className={classname + " relative flex items-center justify-end overflow-hidden"}
@@ -14,6 +14,7 @@ const SummaryCard = ({ classname, totalValue, currentValue, color, iconSrc, scre
                 color={color}
                 iconSrc={iconSrc}
                 screenWidth={screenWidth}
+                type={type}
             />
         </motion.div>
     )

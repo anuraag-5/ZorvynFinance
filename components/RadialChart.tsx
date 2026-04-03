@@ -14,8 +14,9 @@ export default function RadialChart({
     currentValue = 75,
     color = "#ffffff",
     iconSrc = "/icons/flame.png",
-    screenWidth
-}: { totalValue: number, currentValue: number, color?: string, iconSrc: string, screenWidth: number }) {
+    screenWidth,
+    type
+}: { totalValue: number, currentValue: number, color?: string, iconSrc: string, screenWidth: number, type: string }) {
     const percentage = Math.min(100, Math.max(0, (currentValue / totalValue) * 100));
     const data = [{ value: percentage }];
 
@@ -28,7 +29,7 @@ export default function RadialChart({
             layout
             transition={{ duration: 0.4 }}
         >
-            <ResponsiveContainer width={screenWidth > 768 ? 280 : 200} height={screenWidth > 768 ? 280 : 200}>
+            <ResponsiveContainer width={screenWidth > 768 ? 280 : 200} height={screenWidth > 1280 ? type !== "Balance" ? 240 : 280 : screenWidth > 768 ? 270 : 200}>
                 <RadialBarChart
                     data={data}
                     startAngle={90}
