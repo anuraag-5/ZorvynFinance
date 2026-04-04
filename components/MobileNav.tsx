@@ -35,6 +35,7 @@ const NavbarMobile = () => {
     const handleTabChange = (tab: string) => {
         setCurrentTab(tab);
         router.push(tab);
+        setOpen(false);
     };
     return (
         <div className="flex md:hidden justify-between items-center p-5">
