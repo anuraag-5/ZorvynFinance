@@ -24,8 +24,8 @@ export default function SignIn({ loading, setLoading }: { loading: boolean, setL
     }, [])
     const form = useForm({
         defaultValues: {
-            email: "",
-            password: "",
+            email: "abc@gmail.com",
+            password: "password123",
         },
         validators: {
             onSubmit: signinSchema,
@@ -120,9 +120,9 @@ export default function SignIn({ loading, setLoading }: { loading: boolean, setL
                             <div>
                                 <span className="text-[14px] text-black">New User ?</span>
                                 <span
-                                    className="text-white font-bold ml-1 text-[12px]"
+                                    className="text-white font-bold ml-1 text-xs md:text-[14px]"
                                 >
-                                    Just add dummy credentials.
+                                    Just hit signin, doesn't matter.
                                 </span>
                             </div>
                         </div>
