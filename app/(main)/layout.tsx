@@ -36,10 +36,20 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
         const month = today.getMonth();
         const currentDay = today.getDate();
 
+        const cutoffDate = new Date(year, month - 1, 1);
+
         let parsedTransactions: Transaction[] = [];
         const rawTransactions = localStorage.getItem("transactions");
         if (rawTransactions) {
             parsedTransactions = JSON.parse(rawTransactions);
+
+            const originalLength = parsedTransactions.length;
+            parsedTransactions = parsedTransactions.filter(t => new Date(t.date) >= cutoffDate);
+            
+            if (parsedTransactions.length !== originalLength) {
+                localStorage.setItem("transactions", JSON.stringify(parsedTransactions));
+            }
+
             if (currentDay === 1) {
                 const hasIncomeThisMonth = parsedTransactions.some(t => {
                     const date = new Date(t.date);

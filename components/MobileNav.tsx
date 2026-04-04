@@ -21,6 +21,7 @@ const NavbarMobile = () => {
 
     useEffect(() => {
         setMounted(true);
+        setTheme("dark");
     }, []);
 
     const toggleTheme = () => {
