@@ -22,7 +22,6 @@ const Navbar = () => {
 
     useEffect(() => {
         setMounted(true);
-        setTheme("dark");
     }, []);
 
     const toggleTheme = () => {

@@ -30,11 +30,11 @@ const Configuration = () => {
         localStorage.setItem("password", password);
         localStorage.setItem("income", income);
         setUser(email);
-        
+
         let tx = user?.transactions || [];
         const newIncomeVal = Number(income);
         const baseIncomeTxIndex = tx.findIndex(t => t.type === "income");
-        
+
         if (baseIncomeTxIndex !== -1) {
             tx = [...tx];
             tx[baseIncomeTxIndex] = { ...tx[baseIncomeTxIndex], amount: newIncomeVal };
@@ -63,7 +63,7 @@ const Configuration = () => {
             transition={{ duration: 0.4 }}
         >
             <div className="max-w-xl mx-auto bg-[#1a1a24] rounded-[20px] p-6 md:p-8 border border-[#3e3e50] shadow-xl mt-10">
-                <h1 className="text-2xl font-semibold mb-6">Configuration</h1>
+                <h1 className="text-white text-2xl font-semibold mb-6">Configuration</h1>
 
                 <div className="flex flex-col gap-5">
                     <div className="flex flex-col gap-2">
