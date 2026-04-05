@@ -262,7 +262,7 @@ const Transactions = () => {
                         animate={{ opacity: 1, scale: 1 }}
                         className="bg-[#1a1a24] border border-[#3e3e50] rounded-2xl w-full max-w-md p-6 shadow-2xl flex flex-col gap-4"
                     >
-                        <h3 className="text-xl font-semibold mb-2">{editingTransaction ? "Edit Transaction" : "New Transaction"}</h3>
+                        <h3 className="text-white text-xl font-semibold mb-2">{editingTransaction ? "Edit Transaction" : "New Transaction"}</h3>
 
                         <div className="flex flex-col gap-2">
                             <label className="text-sm text-gray-400">Title</label>
