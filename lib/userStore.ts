@@ -46,7 +46,7 @@ const getActualUser = () => {
 
 const getActualIncome = (): number => {
   const income = localStorage.getItem("income");
-  return income ? Number(income) : 80000;
+  return income ? Number(income) : 60000;
 };
 
 const getActualTransactions = (): Transaction[] => {

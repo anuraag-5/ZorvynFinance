@@ -26,7 +26,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
             return;
         }
         const income = localStorage.getItem("income");
-        const parsedIncome = income ? Number(income) : 45000;
+        const parsedIncome = income ? Number(income) : 60000;
         if (!income) {
             localStorage.setItem("income", parsedIncome.toString())
         }
@@ -45,7 +45,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
 
             const originalLength = parsedTransactions.length;
             parsedTransactions = parsedTransactions.filter(t => new Date(t.date) >= cutoffDate);
-            
+
             if (parsedTransactions.length !== originalLength) {
                 localStorage.setItem("transactions", JSON.stringify(parsedTransactions));
             }
