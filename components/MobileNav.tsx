@@ -58,7 +58,7 @@ const NavbarMobile = () => {
                         duration: 1.5,
                     }}
                 >
-                    <Image src="/menu.svg" alt="" width={20} height={20} />
+                    <Image src="/menu-close.svg" alt="" width={20} height={20} />
                 </motion.div>
             ) : (
                 <motion.div
