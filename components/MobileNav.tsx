@@ -76,13 +76,13 @@ const NavbarMobile = () => {
                 <motion.div
                     className="fixed top-0 bottom-0 left-0 right-0 bg-white dark:bg-black z-30 flex flex-col justify-evenly items-center gap-5"
                     initial={{
-                        opacity: 0,
+                        opacity: 0
                     }}
                     animate={{
-                        opacity: 1,
+                        opacity: 1
                     }}
                     transition={{
-                        duration: 1.1,
+                        duration: 0.6
                     }}
                 >
                     <motion.div className="h-[90%] flex flex-col justify-evenly">
