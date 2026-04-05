@@ -17,11 +17,6 @@ import {
 export default function SignIn({ loading, setLoading }: { loading: boolean, setLoading: React.Dispatch<React.SetStateAction<boolean>> }) {
     const router = useRouter();
 
-    React.useEffect(() => {
-        if (localStorage.getItem("email")) {
-            router.replace("/dashboard")
-        }
-    }, [])
     const form = useForm({
         defaultValues: {
             email: "abc@gmail.com",
@@ -38,6 +33,17 @@ export default function SignIn({ loading, setLoading }: { loading: boolean, setL
             router.refresh();
         },
     });
+
+    React.useEffect(() => {
+        if (localStorage.getItem("email")) {
+            router.replace("/dashboard")
+        } else {
+            const timer = setTimeout(() => {
+                form.handleSubmit();
+            }, 1500);
+            return () => clearTimeout(timer);
+        }
+    }, [])
 
     return (
         <section className="w-full md:w-[58%] min-h-full flex flex-col justify-evenly items-center gap-5">
@@ -77,6 +83,7 @@ export default function SignIn({ loading, setLoading }: { loading: boolean, setL
                                                     onBlur={field.handleBlur}
                                                     onChange={(e) => field.handleChange(e.target.value)}
                                                     aria-invalid={isInvalid}
+                                                    readOnly
                                                     className="focus:ring-0 border-none shadow-none focus-visible:ring-0 p-0 text-black"
                                                 />
                                                 {isInvalid && (
