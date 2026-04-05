@@ -201,7 +201,7 @@ const Dashboard = () => {
                         </motion.div>
                         <motion.div className="flex flex-col xl:flex-row gap-5 w-full mt-5">
                             <motion.div className="bg-[#1a1a24] text-white rounded-[20px] p-5 w-full xl:w-2/3">
-                                <div className="mb-14 text-xl">Time Based Visualisation (Monthly)</div>
+                                <div className="mb-14 text-xl">Time Based Visualisation - Daily</div>
                                 <AreaChartGraph data={chartData} width={width} />
                             </motion.div>
                             <motion.div className="bg-[#1a1a24] text-white rounded-[20px] p-5 w-full xl:w-1/3">
