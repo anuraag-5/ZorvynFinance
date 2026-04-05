@@ -84,7 +84,7 @@ const Insights = () => {
             layout
             transition={{ duration: 0.4 }}
         >
-            <div className="bg-[#1a1a24] rounded-[20px] p-6 border border-[#3e3e50]">
+            <div className="bg-[#1a1a24] rounded-[20px] p-6">
                 <h2 className="text-xl font-semibold mb-4">Observation</h2>
                 <p className="text-white text-lg leading-relaxed p-4 rounded-xl">
                     {observation}
@@ -92,7 +92,7 @@ const Insights = () => {
             </div>
 
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-5 w-full">
-                <div className="bg-[#1a1a24] rounded-[20px] p-6 border border-[#3e3e50] flex flex-col items-center justify-between min-h-[400px]">
+                <div className="bg-[#1a1a24] rounded-[20px] p-6 flex flex-col items-center justify-between min-h-[400px]">
                     <h3 className="text-xl font-semibold mb-4 w-full text-left">Highest Spending</h3>
                     {radarData.length > 0 ? (
                         <div className="w-full flex-1 ml-[-20px] md:ml-0 overflow-visible">
@@ -103,7 +103,7 @@ const Insights = () => {
                     )}
                 </div>
 
-                <div className="bg-[#1a1a24] rounded-[20px] p-6 border border-[#3e3e50] flex flex-col items-center min-h-[400px]">
+                <div className="bg-[#1a1a24] rounded-[20px] p-6 flex flex-col items-center min-h-[400px]">
                     <h3 className="text-xl font-semibold mb-4 w-full text-left">Monthly Comparison</h3>
                     <div className="w-full flex-1 flex flex-col justify-center mt-6 pr-4">
                         <AreaChartGraph data={areaData} width={width} />
