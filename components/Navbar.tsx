@@ -22,11 +22,18 @@ const Navbar = () => {
 
     useEffect(() => {
         setMounted(true);
-        setTheme("dark");
+        const userPrefTheme = localStorage.getItem("theme");
+        if (userPrefTheme) {
+            setTheme(userPrefTheme);
+        } else {
+            setTheme("dark");
+            localStorage.setItem("theme", "dark");
+        }
     }, []);
 
     const toggleTheme = () => {
         setTheme(theme === "dark" ? "light" : "dark");
+        localStorage.setItem("theme", theme === "dark" ? "light" : "dark");
     };
 
     const handleMenuToggle = () => setOpen((initialValue) => !initialValue);
