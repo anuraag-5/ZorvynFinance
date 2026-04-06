@@ -134,7 +134,7 @@ const Dashboard = () => {
                                         <SummaryCard
                                             classname=""
                                             totalValue={totalIncome}
-                                            currentValue={totalExpenses}
+                                            currentValue={totalIncome - totalExpenses}
                                             screenWidth={width}
                                             iconSrc="/money.svg"
                                             type="Balance"
