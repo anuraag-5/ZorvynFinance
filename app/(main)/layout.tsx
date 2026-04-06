@@ -72,15 +72,48 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
             const categories: Category[] = ["Food", "Transport", "Shopping", "Entertainment", "Other"];
             const titles = ["Groceries", "Uber", "Amazon", "Netflix", "Misc"];
 
+            const daysInLastMonth = new Date(year, month, 0).getDate();
+            let lastMonthTotal = 0;
+            for (let day = 1; day <= daysInLastMonth; day++) {
+                const numTransactions = Math.floor(Math.random() * 3) + 1;
+                for (let i = 0; i < numTransactions; i++) {
+                    const amount = Math.floor(Math.random() * 1000) + 100;
+                    if (lastMonthTotal + amount > 45000) continue;
+                    lastMonthTotal += amount;
+                    const date = new Date(year, month - 1, day);
+                    const randomCategoryIdx = Math.floor(Math.random() * categories.length);
+                    parsedTransactions.push({
+                        id: Math.random().toString(36).substring(2, 11),
+                        title: titles[randomCategoryIdx],
+                        amount: amount,
+                        type: "expense",
+                        category: categories[randomCategoryIdx],
+                        date: date.toISOString(),
+                    });
+                }
+            }
+            parsedTransactions.push({
+                id: Math.random().toString(36).substring(2, 11),
+                title: "Salary",
+                amount: parsedIncome,
+                type: "income",
+                category: "Income",
+                date: new Date(year, month - 1, 1).toISOString(),
+            });
+
+            let thisMonthTotal = 0;
             for (let day = 1; day <= currentDay; day++) {
                 const numTransactions = Math.floor(Math.random() * 3) + 1;
                 for (let i = 0; i < numTransactions; i++) {
+                    const amount = Math.floor(Math.random() * 1000) + 100;
+                    if (thisMonthTotal + amount > 35000) continue;
+                    thisMonthTotal += amount;
                     const date = new Date(year, month, day);
                     const randomCategoryIdx = Math.floor(Math.random() * categories.length);
                     parsedTransactions.push({
                         id: Math.random().toString(36).substring(2, 11),
                         title: titles[randomCategoryIdx],
-                        amount: Math.floor(Math.random() * 5000) + 100,
+                        amount: amount,
                         type: "expense",
                         category: categories[randomCategoryIdx],
                         date: date.toISOString(),
