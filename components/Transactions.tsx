@@ -53,8 +53,15 @@ const Transactions = () => {
         setTransactions(newTransactions);
         localStorage.setItem("transactions", JSON.stringify(newTransactions));
 
+        const today = new Date();
+        const currentMonth = today.getMonth();
+        const currentYear = today.getFullYear();
+
         const newTotalIncome = newTransactions
-            .filter(t => t.type === "income")
+            .filter(t => {
+                const date = new Date(t.date);
+                return t.type === "income" && date.getMonth() === currentMonth && date.getFullYear() === currentYear;
+            })
             .reduce((sum, t) => sum + t.amount, 0);
 
         setIncome(newTotalIncome);
