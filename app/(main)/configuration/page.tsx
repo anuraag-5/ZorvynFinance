@@ -33,7 +33,15 @@ const Configuration = () => {
 
         let tx = user?.transactions || [];
         const newIncomeVal = Number(income);
-        const baseIncomeTxIndex = tx.findIndex(t => t.type === "income");
+
+        const today = new Date();
+        const currentMonth = today.getMonth();
+        const currentYear = today.getFullYear();
+
+        const baseIncomeTxIndex = tx.findIndex(t => {
+            const date = new Date(t.date);
+            return t.type === "income" && date.getMonth() === currentMonth && date.getFullYear() === currentYear;
+        });
 
         if (baseIncomeTxIndex !== -1) {
             tx = [...tx];
@@ -43,7 +51,10 @@ const Configuration = () => {
         }
 
         const newTotalIncome = tx
-            .filter(t => t.type === "income")
+            .filter(t => {
+                const date = new Date(t.date);
+                return t.type === "income" && date.getMonth() === currentMonth && date.getFullYear() === currentYear;
+            })
             .reduce((sum, t) => sum + t.amount, 0);
 
         setIncome(newTotalIncome);
